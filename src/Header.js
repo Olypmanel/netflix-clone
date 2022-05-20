@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { instance as axios, request } from "./axios";
 import "./App.css";
+import { responsive } from "./axios";
+import { useMediaQuery } from "react-responsive";
+import NavTop from "./NavTop";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 export const TopHeader = styled.div`
@@ -24,6 +27,11 @@ const InnerTop = styled.div`
   .title {
     font-size: 3rem;
   }
+  @media screen and (max-width: ${responsive.mobile}px) {
+    p.overview {
+      width: 45%;
+    }
+  }
 `;
 const Gradient = styled.div`
   background-image: linear-gradient(
@@ -37,8 +45,14 @@ const Gradient = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  @media screen and (max-width: ${responsive.mobile}px) {
+    p.overview {
+      height: 5rem;
+      font-size: 0.6rem;
+    }
 `;
 export const Header = (props) => {
+  const isMobile = useMediaQuery({ maxWidth: responsive.mobile });
   const truncate = (str, n) => {
     return str?.length > n ? str?.substr(0, n - 1) + "..." : str;
   };
@@ -63,13 +77,16 @@ export const Header = (props) => {
   };
   return (
     <TopHeader style={headerStyle}>
+      <NavTop />
       <InnerTop>
         <h1 className="title">{movies?.title || movies?.original_name}</h1>
         <div className="button-wrapper">
           <button>play</button>
           <button>button</button>
         </div>
-        <p className="overview">{truncate(movies?.overview, 300)}</p>
+        <p className="overview">
+          {truncate(movies?.overview, isMobile ? 300 : 500)}
+        </p>
       </InnerTop>
       <Gradient />
     </TopHeader>

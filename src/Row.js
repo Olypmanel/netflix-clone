@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { instance as axios } from "./axios";
+import { instance as axios, responsive } from "./axios";
 import NavTop from "./NavTop";
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
+import { useMediaQuery } from "react-responsive";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 export const TopContainer = styled.section`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 export const RowContainer = styled.div`
   display: flex;
@@ -30,7 +32,10 @@ export const ImgCont = styled.div`
     border-radius: 6px;
     min-height: ${({ height }) => (height ? height + "rem" : "11.875rem")};
     min-width: ${({ width }) => (width ? width + "rem" : "10.25rem")};
-
+    @media screen and (max-width: ${responsive.mobile}px) {
+      min-height: 4rem;
+      min-width: 4rem;
+    }
     &:hover {
       transform: scale(1.09);
       transition: transform 250ms ease-in;
@@ -44,18 +49,21 @@ const H1 = styled.h1`
   margin-left: 1rem;
   margin-top: 1rem;
 `;
-const opts = {
-  height: "390",
-  width: "100%",
-  playerVars: {
-    autoplay: 1,
-  },
-};
-export const Row = (props) => {
-  const { title, fetchUrl, height, width } = props;
 
+export const Row = (props) => {
+  const opts = {
+    margin: "1rem 0",
+    height: "390",
+    width: "100%",
+    playerVars: {
+      autoplay: 1,
+    },
+  };
+  const { title, fetchUrl, height, width } = props;
   const [movies, setMovies] = useState([]);
-  const [trailerUrl, setTrailerUrl] = useState(false);
+  const [trailerUrl, setTrailerUrl] = useState("");
+  // const [isMobile, setIsMobile] = useState(false);
+  // useMediaQuery
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(fetchUrl);
@@ -66,7 +74,7 @@ export const Row = (props) => {
   }, [fetchUrl]);
   const showTrailer = (movieName) => {
     if (trailerUrl) {
-      setTrailerUrl((prevState) => false);
+      setTrailerUrl("");
     } else {
       movieTrailer(
         movieName?.name ||
@@ -80,14 +88,22 @@ export const Row = (props) => {
           const urlParams = new URLSearchParams(new URL(result).search);
           setTrailerUrl((prevState) => urlParams.get("v"));
         })
-        .catch((err) => {
-          console.log("error : " + err);
-        });
+        // movieTrailer(null, { tmdbId: movies.id })
+        //   .then((result) => {
+        //     console.log("result is " + result);
+        //     const urlParams = new URLSearchParams(new URL(result).search);
+        //     console.log("urlParams" + urlParams);
+        //     setTrailerUrl(prevState=>urlParams.get("v"));
+        //   })
+
+        .catch((error) => console.log(error));
+
+      //
     }
   };
   return (
     <TopContainer>
-      <NavTop />
+      {/* <NavTop /> */}
       <H1>{title}</H1>
       <RowContainer>
         <ImgCont>
@@ -107,8 +123,8 @@ export const Row = (props) => {
               )
           )}
         </ImgCont>
-        {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
       </RowContainer>
+      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </TopContainer>
   );
 };

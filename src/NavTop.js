@@ -10,6 +10,8 @@ export const NavCont = styled.nav`
   background: transparent;
   width: 100%;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 2;
   padding: 0 1rem;
   transition: 1000ms all cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -37,11 +39,11 @@ export const NavTop = (props) => {
   });
   console.log(show);
   return (
-    <NavCont className={show && "show-background"}>
+    <NavCont className={show ? "show-background" : ""}>
       <img src={netflixLogo} alt="netflix-logo" />
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
-        alt="netflix-avater"
+        alt="netflix-avatar"
       />
     </NavCont>
   );
