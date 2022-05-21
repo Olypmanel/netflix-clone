@@ -27,10 +27,10 @@ const InnerTop = styled.div`
   .title {
     font-size: 3rem;
   }
+`;
+const OverView = styled.p`
   @media screen and (max-width: ${responsive.mobile}px) {
-    p.overview {
-      width: 45%;
-    }
+    max-width: 45%;
   }
 `;
 const Gradient = styled.div`
@@ -45,16 +45,12 @@ const Gradient = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  @media screen and (max-width: ${responsive.mobile}px) {
-    p.overview {
-      height: 5rem;
-      font-size: 0.6rem;
-    }
 `;
+
 export const Header = (props) => {
   const isMobile = useMediaQuery({ maxWidth: responsive.mobile });
   const truncate = (str, n) => {
-    return str?.length > n ? str?.substr(0, n - 1) + "..." : str;
+    return str?.length > n ? str?.substr(0, n - 1) + " . . ." : str;
   };
   const [movies, setMovies] = useState([]);
   useEffect(() => {
@@ -84,9 +80,9 @@ export const Header = (props) => {
           <button>play</button>
           <button>button</button>
         </div>
-        <p className="overview">
-          {truncate(movies?.overview, isMobile ? 300 : 500)}
-        </p>
+        <OverView className="overview">
+          {truncate(movies?.overview, isMobile ? 100 : 500)}
+        </OverView>
       </InnerTop>
       <Gradient />
     </TopHeader>

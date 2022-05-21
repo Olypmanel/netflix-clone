@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { instance as axios, responsive } from "./axios";
-import NavTop from "./NavTop";
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
-import { useMediaQuery } from "react-responsive";
+
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 export const TopContainer = styled.section`
@@ -62,7 +61,6 @@ export const Row = (props) => {
   const { title, fetchUrl, height, width } = props;
   const [movies, setMovies] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
-  // const [isMobile, setIsMobile] = useState(false);
   // useMediaQuery
   useEffect(() => {
     async function fetchData() {
