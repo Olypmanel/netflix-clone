@@ -4,7 +4,6 @@ import { instance as axios, responsive } from "./axios";
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
 
-
 const base_url = "https://image.tmdb.org/t/p/original/";
 export const TopContainer = styled.section`
   display: flex;
@@ -29,11 +28,13 @@ export const ImgCont = styled.div`
     margin: 0 10px;
     transition: transform 250ms ease-in;
     border-radius: 6px;
-    min-height: ${({ height }) => (height ? height + "rem" : "11.875rem")};
-    min-width: ${({ width }) => (width ? width + "rem" : "10.25rem")};
+    min-height: 11.875rem;
+    min-width: 10.25rem;
     @media screen and (max-width: ${responsive.mobile}px) {
-      min-height: 4rem;
-      min-width: 4rem;
+      min-height: 5rem;
+      min-width: 5rem;
+      margin: 0 5px;
+      border-radius: 4px;
     }
     &:hover {
       transform: scale(1.09);
@@ -45,11 +46,10 @@ const H1 = styled.h1`
   text-transform: capitalize;
   font-size: 1.575rem;
   color: #fff;
-  margin-left: 1rem;
-  margin-top: 1rem;
+  margin: 1.5rem 0 0.5rem 1rem;
 `;
 
-export const Row = (props) => {
+export const Row = ({ title, fetchUrl }) => {
   const opts = {
     margin: "1rem 0",
     height: "390",
@@ -58,7 +58,6 @@ export const Row = (props) => {
       autoplay: 1,
     },
   };
-  const { title, fetchUrl, height, width } = props;
   const [movies, setMovies] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
   // useMediaQuery
@@ -110,8 +109,6 @@ export const Row = (props) => {
               !movie?.adult && (
                 <img
                   onClick={() => showTrailer(movie)}
-                  height={height}
-                  width={width}
                   key={movie.id}
                   src={`${base_url}${
                     movie?.poster_path || movie?.backdrop_path

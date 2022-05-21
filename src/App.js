@@ -18,9 +18,7 @@ function App() {
 
   return (
     <section className="App">
-      <div>
-        <Header />
-      </div>
+      <Header />
       <Row title={"NETFLIX ORIGINALS"} fetchUrl={fetchNetflixOriginals} />
       <Row title={"Trending Now"} fetchUrl={fetchTrending} />
       <Row title={"Top Rated"} fetchUrl={fetchTopRated} />
