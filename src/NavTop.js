@@ -33,10 +33,11 @@ export const NavCont = styled.nav`
 export const NavTop = (props) => {
   const [show, handleShow] = useState(false);
   useEffect(() => {
-    window.addEventListener("scroll", () =>
-      window.scrollY > 200 ? handleShow(true) : handleShow(false)
-    );
-  });
+    const Scroll = () =>
+      window.scrollY > 200 ? handleShow(true) : handleShow(false);
+    window.addEventListener("scroll", Scroll);
+    return () => window.removeEventListener("scroll", Scroll);
+  }, []);
   console.log(show);
   return (
     <NavCont className={show ? "show-background" : ""}>

@@ -30,7 +30,7 @@ const InnerTop = styled.div`
 `;
 const OverView = styled.p`
   @media screen and (max-width: ${responsive.mobile}px) {
-    max-width: 45%;
+    max-width: 55%;
   }
 `;
 const Gradient = styled.div`
@@ -78,7 +78,7 @@ export const Header = (props) => {
         <h1 className="title">{movies?.title || movies?.original_name}</h1>
         <div className="button-wrapper">
           <button>play</button>
-          <button>button</button>
+          <button>play lists</button>
         </div>
         <OverView className="overview">
           {truncate(movies?.overview, isMobile ? 100 : 500)}
