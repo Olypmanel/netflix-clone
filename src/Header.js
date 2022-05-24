@@ -71,6 +71,7 @@ export const Header = (props) => {
       movies?.backdrop_path || movies?.poster_path
     }) no-repeat center/cover`,
   };
+
   return (
     <TopHeader style={headerStyle}>
       <NavTop />
